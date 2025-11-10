@@ -9,7 +9,7 @@ fit <- lm(Ozone ~ Wind, data = airquality)
 #* @param wind numeric vector of wind values
 #* @post /predict
 function(wind) {
-    input <- data.frame(Wind = wind)
+    input <- data.frame(Wind = as.numeric(wind))
     pred <- predict(fit, input)
     as.numeric(pred)
 }
