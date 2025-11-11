@@ -1,25 +1,40 @@
-# plumber.R
-
-#* Echo back the input
-#* @param msg The message to echo
-#* @get /echo
-function(msg="") {
-  list(msg = paste0("The message is: '", msg, "'"))
+#* Echo the parameter that was sent in
+#*
+#* @get /echo/<msg>
+#*
+#* @param msg:string The message to echo back.
+#*
+function(msg) {
+    message("running echo ", Sys.time())
+    list(
+        msg = paste0("The message is: '", msg, "'")
+    )
 }
 
-#* Plot a histogram
-#* @serializer png
+#* Plot out data from the palmer penguins dataset
+#*
 #* @get /plot
-function() {
-  rand <- rnorm(100)
-  hist(rand)
-}
+#*
+#* @query spec:string If provided, filter the data to only this species
+#* (e.g. 'Adelie')
+#*
+#* @serializer png
+#*
+function(query) {
+    myData <- penguins
+    title <- "All Species"
 
-#* Return the sum of two numbers
-#* @param a The first number to add
-#* @param b The second number to add
-#* @post /sum
-function(a, b) {
-  as.numeric(a) + as.numeric(b)
-}
+    # Filter if the species was specified
+    if (!is.null(query$spec)){
+        title <- paste0("Only the '", query$spec, "' Species")
+        myData <- subset(myData, species == query$spec)
+    }
 
+    plot(
+        myData$flipper_len,
+        myData$bill_len,
+        main=title,
+        xlab="Flipper Length (mm)",
+        ylab="Bill Length (mm)"
+    )
+}
