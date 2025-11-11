@@ -2,7 +2,6 @@
 
 library(datasets)
 library(stats)
-library(jsonlite)
 data(airquality)
 fit <- lm(Ozone ~ Wind, data = airquality)
 fit2 <- lm(Ozone ~ Wind + Temp, data = airquality)
@@ -27,6 +26,16 @@ function(varname) {
 #* @get /predict/<wind>
 function(wind) {
     input <- data.frame(Wind = as.numeric(wind))
+    pred <- predict(fit, input)
+    as.numeric(pred)
+}
+
+
+#* Predict Ozone Values With Wind
+#* @get /predict1
+function(query) {
+    wind <- as.numeric(query$wind)
+    input <- data.frame(Wind = wind)
     pred <- predict(fit, input)
     as.numeric(pred)
 }
