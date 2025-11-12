@@ -10,4 +10,3 @@ function(name) {
     message("incoming API call!")
     paste0("Hello there, ", name, "!")
 }
-

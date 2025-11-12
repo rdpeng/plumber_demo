@@ -1,7 +1,6 @@
 ## In-Class Test
 
 library(utils)
-
 dataset <- read.csv("data.csv")
 
 #* Get Variable Names

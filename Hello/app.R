@@ -13,15 +13,33 @@ ui <- fluidPage(
     )
 )
 
+api_endpoint <- "http://127.0.0.1:8080/hello"
+
+# server <- function(input, output) {
+#     output$message <- renderText({
+#         if(nchar(input$name) == 0L)
+#             return("")
+#         api_endpoint <- "http://127.0.0.1:8080/hello"
+#         url_string <- paste(api_endpoint,
+#                             input$name,
+#                             sep = "/")
+#         r <- GET(url_string)
+#         content(r, "text") |>
+#             fromJSON()
+#     })
+# }
+
 server <- function(input, output) {
     output$message <- renderText({
         if(nchar(input$name) == 0L)
             return("")
-        url_string <- paste("http://127.0.0.1:8080/hello",
-                            input$name, sep = "/")
+        url_string <- paste(api_endpoint,
+                            URLencode(input$name),
+                            sep = "/")
         r <- GET(url_string)
         content(r, "text") |>
-            fromJSON()
+            fromJSON() |>
+            URLdecode()
     })
 }
 
