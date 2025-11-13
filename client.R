@@ -2,7 +2,7 @@ library(httr)
 library(splancs)
 
 ## Write out binary PNG data to a temporary file and the open in Preview
-viewPNG <- function(response) {
+viewImage <- function(response) {
     bytes <- content(response, "raw")
     tfile <- paste(tempfile(), "png", sep = ".")
     writeBin(bytes, tfile)
