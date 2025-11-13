@@ -14,8 +14,8 @@ fit <- randomForest(value ~ lat + lon,
 #* @serializer rds
 #*
 function(body) {
-    message("making predictions!")
     dat <- as.data.frame(body)
+    message(sprintf("making predictions with %d points", nrow(dat)))
     pred <- predict(fit, dat)
     dat$pred <- pred
     dat[, c("lon", "lat", "pred")]
@@ -28,14 +28,14 @@ function(body) {
 #* @serializer png{width = 640, height = 480}
 #*
 function(body) {
-    message("making plot!")
     dat <- as.data.frame(body)
-    p <- map_data("usa") |>
+    message("making a plot with ", nrow(dat), " points")
+    p <- map_data("state") |>
         ggplot(aes(long, lat)) +
-        geom_path(aes(group = group)) +
         geom_point(aes(lon, lat, color = pred),
                    data = dat, size = 2) +
         scale_color_viridis_c() +
+        geom_path(aes(group = group)) +
         coord_fixed() +
         theme_bw()
     print(p)
