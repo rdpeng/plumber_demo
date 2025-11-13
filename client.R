@@ -1,3 +1,17 @@
+################################################################################
+## test3.R
+
+r <- GET("http://127.0.0.1:8080/variableInfo/denom")
+content(r, "text") |>
+    fromJSON()
+
+r <- GET("http://127.0.0.1:8080/variableInfo/Ozone")
+content(r, "text") |>
+    fromJSON()
+
+################################################################################
+## ml_example.R
+
 library(httr)
 library(splancs)
 library(ggplot2)

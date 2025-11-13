@@ -19,7 +19,6 @@ api_endpoint <- "http://127.0.0.1:8080/hello"
 #     output$message <- renderText({
 #         if(nchar(input$name) == 0L)
 #             return("")
-#         api_endpoint <- "http://127.0.0.1:8080/hello"
 #         url_string <- paste(api_endpoint,
 #                             input$name,
 #                             sep = "/")
