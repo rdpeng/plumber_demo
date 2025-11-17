@@ -2,6 +2,7 @@ library(randomForest)
 library(readr)
 library(ggplot2)
 library(splancs)
+library(httr)
 
 dat <- read_csv("pm25_data.csv.bz2")
 fit <- randomForest(value ~ lat + lon,
@@ -34,8 +35,22 @@ function(body) {
 #* @serializer png{width = 900, height = 600}
 #*
 function(body) {
-    dat <- as.data.frame(body)
     message("making a plot with ", nrow(dat), " points")
+    api_base <- "http://127.0.0.1:8080"
+
+    ## Great a regular grid of lon/lat at which predictions will be made
+    g <- expand.grid(lon = seq(-125, -65, len = body$xgrid),
+                     lat = seq(25, 50, len = body$ygrid))
+
+    ## Get predicted values for grid
+    p <- POST(paste(api_base, "predict", sep = "/"),
+              body = serialize(g, NULL),
+              content_type("application/rds"))
+
+    ## Unserialize response to data frame
+    p <- content(p, "raw") |>
+        unserialize()
+    p <- p[p$in_usa, ]
 
     p <- dat |>
         ggplot() +
