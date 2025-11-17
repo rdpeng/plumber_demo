@@ -14,7 +14,7 @@ fit <- randomForest(value ~ lat + lon,
 #* @parser rds
 #* @serializer rds
 #*
-function(body) {
+predict_api <- function(body) {
     dat <- as.data.frame(body)
     message(sprintf("making predictions with %d points", nrow(dat)))
     pred <- predict(fit, dat)
