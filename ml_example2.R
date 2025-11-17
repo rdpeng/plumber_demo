@@ -36,7 +36,8 @@ function(body) {
 #*
 function(body) {
     message("making a plot with ", nrow(dat), " points")
-    api_base <- "http://127.0.0.1:8080"
+    api_base <- "http://164.90.154.116:8080"
+    ## api_base <- "http://127.0.0.1:8080"
 
     ## Great a regular grid of lon/lat at which predictions will be made
     g <- expand.grid(lon = seq(-125, -65, len = body$xgrid),
