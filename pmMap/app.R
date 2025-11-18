@@ -2,7 +2,6 @@ library(shiny)
 library(magick)
 library(httr)
 
-## api_base <- "http://164.90.154.116:8080"
 api_base <- "http://127.0.0.1:8080"
 
 ui <- fluidPage(
